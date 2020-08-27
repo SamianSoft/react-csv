@@ -31,9 +31,16 @@ class CSVDownload extends React.Component {
 
   componentDidMount(){
     const {data, headers, separator, enclosingCharacter, uFEFF, target, specs, replace} = this.props;
-    this.state.page = window.open(
-        this.buildURI(data, uFEFF, headers, separator, enclosingCharacter), target, specs, replace
-    );
+    // this.state.page = window.open(
+    //   this.buildURI(data, uFEFF, headers, separator, enclosingCharacter), target, specs, replace
+    // );
+    const myUrl = this.buildURI(data, uFEFF, headers, separator, enclosingCharacter);
+    var a = document.createElement('a');
+    a.href = myUrl;
+    a.download = "report.csv";
+    document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+    a.click();    
+    a.remove();  //afterwards we remove the element again    
   }
 
   getWindow() {

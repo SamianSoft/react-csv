@@ -28,6 +28,7 @@ export const jsons2arrays = (jsons, headers) => {
   }
 
   const data = jsons.map((object) => headerKeys.map((header) => getHeaderValue(header, object)));
+  debugger;
   return [headerLabels, ...data];
 };
 
@@ -48,10 +49,12 @@ export const getHeaderValue = (property, obj) => {
 }
 
 export const elementOrEmpty = (element) => {
+  debugger;
   (typeof element === 'undefined' || element === null) ? '' : element;
 };
 
 export const joiner = ((data, separator = ',', enclosingCharacter = '"') => {
+  debugger;
   return data
     .filter(e => e)
     .map(
@@ -69,13 +72,15 @@ export const arrays2csv = ((data, headers, separator, enclosingCharacter) =>
 
 export const jsons2csv = ((data, headers, separator, enclosingCharacter) =>
  joiner(jsons2arrays(data, headers), separator, enclosingCharacter)
-);
+});
 
 export const string2csv = ((data, headers, separator, enclosingCharacter) =>
   (headers) ? `${headers.join(separator)}\n${data}`: data
 );
 
 export const toCSV = (data, headers, separator, enclosingCharacter) => {
+  const mytype = typeof(data);
+  debugger;
  if (isJsons(data)) return jsons2csv(data, headers, separator, enclosingCharacter);
  if (isArrays(data)) return arrays2csv(data, headers, separator, enclosingCharacter);
  if (typeof data ==='string') return string2csv(data, headers, separator);
@@ -87,7 +92,6 @@ export const buildURI = ((data, uFEFF, headers, separator, enclosingCharacter) =
   const type = isSafari() ? 'application/csv' : 'text/csv';
   const blob = new Blob([uFEFF ? '\uFEFF' : '', csv], {type});
   const dataURI = `data:${type};charset=utf-8,${uFEFF ? '\uFEFF' : ''}${csv}`;
-
   const URL = window.URL || window.webkitURL;
 
   return (typeof URL.createObjectURL === 'undefined')
